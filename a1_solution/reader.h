@@ -19,7 +19,7 @@
 #include "list.h"
 #include "tree.h"
 
-#pragma once
+
 
 namespace cpt323::reader
 {

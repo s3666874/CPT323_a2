@@ -5,6 +5,10 @@ void cpt323::list::node::set_next(std::unique_ptr<node>&& newnext)
         next = std::move(newnext);
 }
 
+cpt323::list::list::list(void) : head(nullptr), num_elts(0)
+{
+}
+
 void cpt323::list::list::add(const std::string& newstr)
 {
         static node* tail = nullptr;
@@ -20,6 +24,11 @@ void cpt323::list::list::add(const std::string& newstr)
         }
         ++num_elts;
         
+}
+
+std::size_t cpt323::list::list::size(void)
+{
+        return num_elts;
 }
 
 std::unique_ptr<cpt323::list::list> cpt323::list::list::readfile(std::string_view filename)
@@ -76,4 +85,37 @@ std::unique_ptr<cpt323::list::list> cpt323::list::list::readfile(std::string_vie
                 std::cerr << ex.what() << "\n";
         }
         return thelist;
+}
+
+cpt323::list::nodeptrpair cpt323::list::list::find_min(void)
+{
+        nodeptrpair pair(nullptr, nullptr);
+        nodeptr current = &head, prev = nullptr;
+
+        while (current != nullptr)
+        {
+                if (pair.second == nullptr ||
+                    (*current)->data < (*(pair.second))->data)
+                {
+                        pair.first = prev;
+                        pair.second = current;
+                }
+
+                prev = current;
+
+                current = (*current == nullptr || (*current)->next == nullptr)
+                              ? nullptr
+                              : &((*current)->next);
+        }
+        return pair;
+}
+
+void cpt323::list::list::print(void)
+{
+        std::ostringstream oss;
+        for (auto word : *this)
+        {
+                oss << word << "\n";
+        }
+        std::cout << oss.str();
 }

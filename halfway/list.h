@@ -24,14 +24,21 @@ namespace cpt323::list
                 }
         };
 
+        using nodeptr = std::unique_ptr<node>*;
+        using nodeptrpair = std::pair<nodeptr, nodeptr>;
+
         struct list: public cpt323::datastructure::datastructure
         {
                 private:
                         std::unique_ptr<node> head;
                         std::size_t num_elts;
 
+                list(void);
                 void add(const std::string&);
                 std::unique_ptr<cpt323::list::list> readfile(std::string_view);
+                std::size_t size(void);
+                void print(void);
+                nodeptrpair find_min(void);
 
                 virtual ~list(void)
                 {

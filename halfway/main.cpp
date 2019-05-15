@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
                 po::notify(vm);
 
                 std::cout << infile << std::endl;
+                auto thelist = cpt323::list::list::readfile(infile);
 
 /*
                 std::cout << outname << std::endl;

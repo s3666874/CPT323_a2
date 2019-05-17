@@ -1,3 +1,4 @@
+#include <string_view>
 #include "datastructure.h"
 #pragma once
 

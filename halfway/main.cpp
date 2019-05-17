@@ -40,6 +40,11 @@ int main(int argc, char* argv[])
                 std::cout << infile << std::endl;
                 auto thelist = cpt323::list::list::readfile(infile);
 
+                if (infile) {
+                        thelist->sort();
+                        //cpt323::list::list::savefile(outname, *thelist);
+                }
+
 /*
                 std::cout << outname << std::endl;
                 std::cout << datastructure << std::endl;

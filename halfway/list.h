@@ -1,3 +1,5 @@
+#include <cassert>
+#include <sstream>
 #include <string_view>
 #include "datastructure.h"
 #pragma once
@@ -40,6 +42,12 @@ namespace cpt323::list
                 std::size_t size(void);
                 void print(void);
                 nodeptrpair find_min(void);
+                void sort(void);
+
+                virtual bool empty(void)
+                {
+                        return size() == 0;
+                }
 
                 virtual ~list(void)
                 {

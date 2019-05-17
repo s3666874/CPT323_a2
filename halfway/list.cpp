@@ -110,10 +110,62 @@ cpt323::list::nodeptrpair cpt323::list::list::find_min(void)
         return pair;
 }
 
+void cpt323::list::list::sort(void)
+{
+        cpt323::list::list sortedlist;
+        nodeptr endptr = nullptr;
+
+        while (!empty())
+        {
+                nodeptrpair min = find_min();
+
+                std::unique_ptr<node> removed = std::move(*(min.second));
+
+                if (!min.first)
+                {
+                        if (removed)
+                        {
+                                if (removed->next)
+                                {
+                                        head = std::move(removed->next);
+                                }
+                                else
+                                {
+                                        head = nullptr;
+                                }
+                        }
+                }
+                else
+                {
+                        (*min.first)->set_next(std::move(removed->next));
+                }
+                --num_elts;
+
+                if (!endptr)
+                {
+                        sortedlist.head = std::move(removed);
+                        endptr = &sortedlist.head;
+                }
+                else
+                {
+                        (*(endptr))->next = std::move(removed);
+                        endptr = &(*(endptr))->next;
+                }
+                ++sortedlist.num_elts;
+        }
+        assert(empty());
+
+        head = std::move(sortedlist.head);
+        num_elts = sortedlist.num_elts;
+}
+
 void cpt323::list::list::print(void)
 {
-        std::ostringstream oss;
-        for (auto word : *this)
+        std::stringstream oss;
+        std::string word;
+
+        //for (auto word : *this)
+        while (oss >> word)
         {
                 oss << word << "\n";
         }

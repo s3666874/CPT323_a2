@@ -5,6 +5,7 @@
 #include <vector>
 #include <string_view>
 #include "list.h"
+#include "tree.h"
 
 #pragma once
 void display_usage(std::string_view);

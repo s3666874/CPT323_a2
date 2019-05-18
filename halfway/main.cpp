@@ -37,12 +37,22 @@ int main(int argc, char* argv[])
 
                 po::notify(vm);
 
-                auto thelist = cpt323::list::list::readfile(infile);
+                if (datastructure.compare("list") == 0) {
+                        auto thelist = cpt323::list::list::readfile(infile);
 
-                if (thelist) {
-                        thelist->sort();
-                        cpt323::list::list::savefile(outfile, *thelist);
+                        if (thelist) {
+                                thelist->sort();
+                                cpt323::list::list::savefile(outfile, *thelist);
+                        }
+                } else if (datastructure.compare("tree") == 0) {
+                        auto thetree = cpt323::tree::tree::readfile(infile);
+
+                        if (thetree) {
+                                thetree->sort();
+                                cpt323::tree::tree::savefile(outfile, *thetree);
+                        }
                 }
+                
 
 /*
                 std::cout << outfile << std::endl;

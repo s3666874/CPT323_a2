@@ -2,18 +2,21 @@
 
 using namespace std;
 
-void changeIt(int &i)
+void af(int g)
 {
-        i++;
+    g++;
+    //cout << g;
 };
 
 int main(void)
 {
-        int i = 1;
+        int g = 123;
 
-        changeIt(i);
-
-        cout << i << endl;
-
+        cout << "Before: " << g << endl;
+        
+        af(g);
+        
+        cout << "After: " << g << endl;
+        
         return 0;
 }

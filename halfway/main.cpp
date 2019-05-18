@@ -5,7 +5,7 @@ namespace po = boost::program_options;
 int main(int argc, char* argv[])
 {
         std::string infile;
-        std::string outname;
+        std::string outfile;
         std::string datastructure;
         std::vector<std::string> filenames;
 
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
             ("help", "produce help message")
             ("input,i", po::value<std::string>(&infile)->required(), "The file to import. Temporary")
             ("datastructure,d", po::value<std::string>(&datastructure)->required(), "The specified datastructure")
-            ("output,o", po::value<std::string>(&outname)->required(), "The file to output the sorted data into");
+            ("output,o", po::value<std::string>(&outfile)->required(), "The file to output the sorted data into");
 
         po::variables_map vm;
 
@@ -37,16 +37,15 @@ int main(int argc, char* argv[])
 
                 po::notify(vm);
 
-                std::cout << infile << std::endl;
                 auto thelist = cpt323::list::list::readfile(infile);
 
-                if (infile) {
+                if (thelist) {
                         thelist->sort();
-                        //cpt323::list::list::savefile(outname, *thelist);
+                        cpt323::list::list::savefile(outfile, *thelist);
                 }
 
 /*
-                std::cout << outname << std::endl;
+                std::cout << outfile << std::endl;
                 std::cout << datastructure << std::endl;
 
                 for(int i = 0; i < filenames.size(); i++) {

@@ -5,6 +5,10 @@ void cpt323::list::node::set_next(std::unique_ptr<node>&& newnext)
         next = std::move(newnext);
 }
 
+cpt323::list::list::iterator::iterator(cpt323::list::node* anode) : current(anode)
+{
+}
+
 cpt323::list::list::list(void) : head(nullptr), num_elts(0)
 {
 }
@@ -23,12 +27,49 @@ void cpt323::list::list::add(const std::string& newstr)
                 tail = head.get();
         }
         ++num_elts;
-        
+}
+
+cpt323::list::list::iterator cpt323::list::list::begin(void) const
+{
+        return iterator(head.get());
+}
+
+cpt323::list::list::iterator cpt323::list::list::end(void) const
+{
+        return iterator(nullptr);
 }
 
 std::size_t cpt323::list::list::size(void)
 {
         return num_elts;
+}
+
+std::string& cpt323::list::list::iterator::operator*(void) const
+{
+        return current->data;
+}
+
+cpt323::list::list::iterator cpt323::list::list::iterator::operator++(void)
+{
+        current = current->next.get();
+        return iterator(*this);
+}
+
+cpt323::list::list::iterator cpt323::list::list::iterator::operator++(int)
+{
+        iterator it = *this;
+        operator++();
+        return iterator(it);
+}
+
+bool cpt323::list::list::iterator::operator==(const cpt323::list::list::iterator& it)
+{
+        return it.current == current;
+}
+
+bool cpt323::list::list::iterator::operator!=(const cpt323::list::list::iterator& it)
+{
+        return !(*this == it);
 }
 
 std::unique_ptr<cpt323::list::list> cpt323::list::list::readfile(std::string_view filename)
@@ -159,15 +200,46 @@ void cpt323::list::list::sort(void)
         num_elts = sortedlist.num_elts;
 }
 
+bool cpt323::list::list::savefile(std::string_view filename, const cpt323::list::list& thelist)
+{
+        std::ofstream out(filename.data());
+        std::string word;
+
+        if (!out)
+        {
+                perror("failed to open file for saving");
+                return false;
+        }
+
+        out.exceptions(std::ios::failbit | std::ios::badbit);
+
+        try
+        {
+                for (const auto& item : thelist)
+                {
+                        out << item << "\n";
+                }
+                out << std::flush;
+        }
+        catch (std::ios::failure& iff)
+        {
+                perror("failed to save the file");
+                return false;
+        }
+        return true;
+}
+
 void cpt323::list::list::print(void)
 {
         std::stringstream oss;
         std::string word;
 
-        //for (auto word : *this)
         while (oss >> word)
         {
                 oss << word << "\n";
         }
         std::cout << oss.str();
 }
+
+
+

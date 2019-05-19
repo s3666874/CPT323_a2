@@ -5,7 +5,6 @@ namespace po = boost::program_options;
 int main(int argc, char* argv[])
 {
         std::string infile;
-        std::string outfile;
         std::string datastructure;
         std::vector<std::string> filenames;
 
@@ -16,8 +15,7 @@ int main(int argc, char* argv[])
         desc.add_options()
             ("help", "produce help message")
             ("input,i", po::value<std::string>(&infile)->required(), "The file to import. Temporary")
-            ("datastructure,d", po::value<std::string>(&datastructure)->required(), "The specified datastructure")
-            ("output,o", po::value<std::string>(&outfile)->required(), "The file to output the sorted data into");
+            ("datastructure,d", po::value<std::string>(&datastructure)->required(), "The specified datastructure");
 
         po::variables_map vm;
 
@@ -42,41 +40,14 @@ int main(int argc, char* argv[])
 
                         if (thelist) {
                                 thelist->sort();
-                                cpt323::list::list::savefile(outfile, *thelist);
                         }
                 } else if (datastructure.compare("tree") == 0) {
                         auto thetree = cpt323::tree::tree::readfile(infile);
 
                         if (thetree) {
                                 thetree->sort();
-                                cpt323::tree::tree::savefile(outfile, *thetree);
                         }
                 }
-                
-
-/*
-                std::cout << outfile << std::endl;
-                std::cout << datastructure << std::endl;
-
-                for(int i = 0; i < filenames.size(); i++) {
-                        std::cout << filenames[i] << std::endl;
-                }
-*/
-/*
-                std::ifstream in(filename.data());
-
-                if (!in)
-                {
-                        std::cout << "File cannot be read" << std::endl;
-                        return EXIT_FAILURE;
-                }
-
-                std::string line;
-                while (std::getline(in, line))
-                {
-                        std::cout << line << std::endl;
-                }
-*/
         }
         catch(const std::exception& e)
         {
@@ -91,6 +62,6 @@ void display_usage(std::string_view view)
         std::cout << "You should call this program in the following way: \n\t" << view << " [args]\n";
         std::cout << "\nWhere [args] must include the following options: \n\n";
         std::cout << "-d followed by a datastructure type: the datastructure you want to make.\n";
-        std::cout << "-o followed by a filename path: the filename of the file to output data into.\n";
+        std::cout << "-i followed by a filename path: the filename of the file that holds the input data.\n";
         std::cout << "any input files you want to include in the merge sorter tool.\n";
 }

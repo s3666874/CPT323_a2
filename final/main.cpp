@@ -35,16 +35,13 @@ int main(int argc, char* argv[])
 
                 po::notify(vm);
 
-                
-
-/*
                 std::cout << outname << std::endl;
                 std::cout << datastructure << std::endl;
 
                 for(int i = 0; i < filenames.size(); i++) {
                         std::cout << filenames[i] << std::endl;
                 }
-*/
+
 /*
                 std::ifstream in(filename.data());
 

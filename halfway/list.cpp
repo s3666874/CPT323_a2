@@ -29,15 +29,18 @@ void cpt323::list::list::add(const std::string& newstr)
         ++num_elts;
 }
 
-cpt323::list::list::iterator cpt323::list::list::begin(void) const
+std::unique_ptr<cpt323::datastructure::datastructure::iterator> cpt323::list::list::begin(void) 
 {
-        return iterator(head.get());
+        return std::make_unique<cpt323::list::list::iterator>(head.get());
+        //return std::make_unique<cpt323::list::list::iterator>(head.get());
 }
 
-cpt323::list::list::iterator cpt323::list::list::end(void) const
+/*
+std::unique_ptr<cpt323::list::list::iterator> end(void)
 {
-        return iterator(nullptr);
+        return std::make_unique<cpt323::list::list::iterator>(nullptr);
 }
+*/
 
 std::size_t cpt323::list::list::size(void)
 {

@@ -31,7 +31,7 @@ namespace cpt323::list
 
         struct list: public cpt323::datastructure::datastructure
         {
-                struct iterator
+                struct iterator: public cpt323::datastructure::datastructure::iterator
                 {
                         node* current;
 
@@ -50,8 +50,8 @@ namespace cpt323::list
 
                 list(void);
                 void add(const std::string&);
-                cpt323::list::list::iterator begin(void) const;
-                cpt323::list::list::iterator end(void) const;
+                std::unique_ptr<iterator> begin(void);
+                //std::unique_ptr<cpt323::datastructure::datastructure::iterator> end(void);
                 std::size_t size(void);
                 void sort(void);
 
